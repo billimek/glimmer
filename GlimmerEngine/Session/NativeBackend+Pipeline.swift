@@ -196,6 +196,8 @@ extension NativeBackend {
             self?.stopConnection()
         }
 
+        enet.onRateChange = { [weak self] result in self?.rateChanges.deliver(result) }
+
         // HDR engagement pulls mastering metadata through this channel;
         // without it a 10-bit stream renders as washed-out SDR.
         enet.onHdrMode = { [weak self] enabled in
@@ -433,7 +435,8 @@ extension NativeBackend {
             host: host,
             port: handshake.controlPort,
             controlConnectData: handshake.controlConnectData,
-            crypto: crypto, collectBandwidthSamples: config.collectBandwidthSamples)
+            crypto: crypto, collectBandwidthSamples: config.collectBandwidthSamples,
+            rateChangeNegotiated: handshake.rateChangeNegotiated)
         // START can carry HDR and feedback; callbacks must be immutable once receiving begins.
         wireVideoControl(enet: enet, events: events)
         installControllerFeedback(enet: enet, events: events)

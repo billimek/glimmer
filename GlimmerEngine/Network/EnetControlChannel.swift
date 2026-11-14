@@ -60,6 +60,8 @@ final class EnetControlChannel: @unchecked Sendable {
     let port: UInt16
     let controlConnectData: UInt32
     let crypto: ControlCrypto
+    /// DESCRIBE listed 0x553C, so rate change requests may be sent and results are read.
+    let rateChangeNegotiated: Bool
 
     /// Receive callbacks and ACK processing own this queue. Outbound input submits on its separate
     /// sender thread, so it cannot serialize ahead of inbound delivery.
@@ -416,6 +418,8 @@ final class EnetControlChannel: @unchecked Sendable {
     /// the consumer hops off it (DualSenseHID does its IOKit write on its own
     /// serial path). Only sent to DualSense pads (Sunshine extension).
     var onSetAdaptiveTriggers: ((UInt16, UInt8, UInt8, UInt8, [UInt8], [UInt8]) -> Void)?
+    /// Fired for each valid 0x553C result, on the receive thread; only when `rateChangeNegotiated`.
+    var onRateChange: ((RateChange.Result) -> Void)?
     /// Fired AT MOST ONCE when the channel tears down (interrupt()/close(),
     /// whichever lands first - see fireTeardownOnce). Covers every stream-end
     /// path: user stop, watchdog teardown, and host TERMINATION (which funnels
@@ -457,7 +461,7 @@ final class EnetControlChannel: @unchecked Sendable {
     let startInstant = DispatchTime.now()
 
     init(host: NWEndpoint.Host, port: UInt16, controlConnectData: UInt32,
-         crypto: ControlCrypto, collectBandwidthSamples: Bool = false,
+         crypto: ControlCrypto, collectBandwidthSamples: Bool = false, rateChangeNegotiated: Bool = false,
          sealControl: @escaping @Sendable (ControlCrypto, UInt16, [UInt8], UInt32) throws -> [UInt8] = {
              try $0.seal(type: $1, payload: $2, seq: $3)
          }) {
@@ -466,6 +470,7 @@ final class EnetControlChannel: @unchecked Sendable {
         self.controlConnectData = controlConnectData
         self.crypto = crypto
         self.collectBandwidthSamples = collectBandwidthSamples
+        self.rateChangeNegotiated = rateChangeNegotiated
         self.sealControl = sealControl
         self.connectID = UInt32.random(in: UInt32.min...UInt32.max)
     }

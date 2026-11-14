@@ -154,6 +154,7 @@ extension RtspClient {
         // (0x02 = LI_FF_CONTROLLER_TOUCH_EVENTS).
         result.featureFlags =
             SdpScan.attributeUInt(sdp, "x-ss-general.featureFlags") ?? 0
+        result.rateChangeNegotiated = SdpScan.controlMessages(sdp).contains(RateChange.messageType)
         let channels = AudioConfig.channelCount(packed: config.audioConfiguration)
         (result.opusConfig, result.highQualityAudio) = SdpScan.audioLayout(sdp, channelCount: channels)
     }

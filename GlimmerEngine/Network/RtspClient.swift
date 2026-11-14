@@ -45,6 +45,8 @@ struct RtspHandshakeResult {
     /// Sunshine x-ss-general.featureFlags from the DESCRIBE SDP (RtspConnection.c:1145).
     /// 0 if absent. Bit 0x02 = LI_FF_CONTROLLER_TOUCH_EVENTS gates controllerTouch.
     var featureFlags: UInt32 = 0
+    /// DESCRIBE listed 0x553C in `a=x-rl-control:`, so the PC takes mid-stream rate changes.
+    var rateChangeNegotiated = false
     /// 16 raw bytes from SETUP-video X-SS-Ping-Payload, captured verbatim (not hex-decoded) and only when the
     /// value is exactly 16 chars. Sunshine always sends one; without it no ping of ours would match.
     var videoPingPayload: [UInt8] = []

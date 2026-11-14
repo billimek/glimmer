@@ -265,6 +265,8 @@ extension EnetControlChannel {
             handleSetAdaptiveTriggers(payload)
         case CtrlV2.setPlayerLeds:
             handleSetPlayerLeds(payload)
+        case RateChange.messageType where rateChangeNegotiated:
+            handleRateChange(payload)
         default:
             // ACKed + decrypted but not dispatched - truly-unknown types now
             // (rumble 0x010b, triggers 0x5500, and RGB LED 0x5502 each lived

@@ -19,6 +19,7 @@ package final class NativeBackend: StreamingBackend, @unchecked Sendable {
     private let teardownLock = NSRecursiveLock()
     var rtspClient: RtspClient?
     var enetChannel: EnetControlChannel?
+    let rateChanges = RateChangeExchange()
     var videoReceiver: VideoRtpReceiver?
     /// Native audio receive: ONE unconnected UDP socket that BOTH pings the audio
     /// port (so the host aims audio RTP at our return port) AND recvfrom's the

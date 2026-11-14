@@ -355,6 +355,10 @@ package protocol StreamingBackend: AnyObject, Sendable {
     /// the nap, so without this a post-wake probe reads false-fresh. No-op when
     /// the backend has no control channel up; the protocol default is a no-op.
     func wakeReanchorAndPing()
+    /// True when the PC takes mid-stream bitrate changes on this connection.
+    var supportsRateChange: Bool { get }
+    /// Asks the PC for a new bitrate and waits for its answer; nil when unsupported, unsent or unanswered.
+    func changeBitrate(toKbps kbps: Int) async -> RateChange.Result?
     /// = LiRequestIdrFrame.
     func requestIdrFrame()
     /// Host HDR10 mastering metadata. nil when unavailable.
@@ -396,6 +400,10 @@ package protocol StreamingBackend: AnyObject, Sendable {
 }
 
 extension StreamingBackend {
+    /// Default: no mid-stream rate change; only Rubylight connections that negotiated 0x553C take it.
+    package var supportsRateChange: Bool { false }
+    package func changeBitrate(toKbps kbps: Int) async -> RateChange.Result? { nil }
+
     /// Default: no control-stream health to report. Backends with an ENet
     /// control channel (NativeBackend) override this; a future C backend would
     /// inherit nil rather than be forced to fabricate the numbers.

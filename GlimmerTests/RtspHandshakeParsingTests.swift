@@ -177,6 +177,20 @@ struct RtspHandshakeParsingTests {
         #expect(bare.featureFlags == 0)
     }
 
+    @Test func describeListingTheRateChangeMessageNegotiatesIt() {
+        var listed = Self.emptyResult()
+        Self.client().negotiate(sdp: Self.h264Sdp + "a=x-rl-control:0x5530,0x553C \r\n", into: &listed)
+        #expect(listed.rateChangeNegotiated)
+
+        var other = Self.emptyResult()
+        other.rateChangeNegotiated = true
+        Self.client().negotiate(sdp: Self.h264Sdp + "a=x-rl-control:0x5530,0x5531 \r\n", into: &other)
+        #expect(!other.rateChangeNegotiated)
+        var bare = Self.emptyResult()
+        Self.client().negotiate(sdp: Self.h264Sdp, into: &bare)
+        #expect(!bare.rateChangeNegotiated)
+    }
+
     @Test func errorsDescribeWhatFailed() {
         #expect(RtspError.connectTimeout(48010).description.contains("48010"))
         #expect(RtspError.responseTimeout(10).description == "no RTSP response within 10 s")

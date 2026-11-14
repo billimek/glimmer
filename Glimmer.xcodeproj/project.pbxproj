@@ -213,11 +213,13 @@
 		D1000042 /* NativeBackend+Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000041 /* NativeBackend+Pipeline.swift */; };
 		D1000044 /* NativeBackend+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000043 /* NativeBackend+Helpers.swift */; };
 		D1000046 /* NativeBackend+Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000045 /* NativeBackend+Input.swift */; };
+		DEC0DE2026111400A0000006 /* NativeBackend+RateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A0000005 /* NativeBackend+RateChange.swift */; };
 		D1000048 /* StreamSession+Watchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000047 /* StreamSession+Watchdog.swift */; };
 		D100004A /* StreamSession+Lifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000049 /* StreamSession+Lifecycle.swift */; };
 		D100004C /* StreamSession+Callbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100004B /* StreamSession+Callbacks.swift */; };
 		D100004E /* StreamBridgeContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100004D /* StreamBridgeContext.swift */; };
 		D1000050 /* RtspClient+Handshake.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100004F /* RtspClient+Handshake.swift */; };
+		DEC0DE2026111400A0000004 /* EnetControlChannel+RateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A0000003 /* EnetControlChannel+RateChange.swift */; };
 		D1000052 /* Pairing+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000051 /* Pairing+Crypto.swift */; };
 		D1000054 /* Types+Cert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000053 /* Types+Cert.swift */; };
 		D100005A /* Identity+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000059 /* Identity+Loading.swift */; };
@@ -523,6 +525,8 @@
 		D2000039 /* StreamProtocolConstantsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2000038 /* StreamProtocolConstantsTests.swift */; };
 		DEC0DE2026111400A0000008 /* RateChangeWireTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A0000007 /* RateChangeWireTests.swift */; };
 		DEC0DE2026111400A000000A /* RateChangeLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A0000009 /* RateChangeLaunchTests.swift */; };
+		DEC0DE2026111400A000000C /* EnetRateChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A000000B /* EnetRateChangeTests.swift */; };
+		DEC0DE2026111400A000000E /* RateChangeExchangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A000000D /* RateChangeExchangeTests.swift */; };
 		D5CD78BE12E450A9FDBE6424 /* FuzzTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5F39A59E54E022FEE74E /* FuzzTests.swift */; };
 		DEC0DE202610020000000013 /* FuzzTests+Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE202610020000000014 /* FuzzTests+Stream.swift */; };
 		D96F6019901B5705F1040F52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505E37FB63C22AC476506587 /* Foundation.framework */; };
@@ -1086,11 +1090,13 @@
 		D1000041 /* NativeBackend+Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session/NativeBackend+Pipeline.swift"; sourceTree = "<group>"; };
 		D1000043 /* NativeBackend+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session/NativeBackend+Helpers.swift"; sourceTree = "<group>"; };
 		D1000045 /* NativeBackend+Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session/NativeBackend+Input.swift"; sourceTree = "<group>"; };
+		DEC0DE2026111400A0000005 /* NativeBackend+RateChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session/NativeBackend+RateChange.swift"; sourceTree = "<group>"; };
 		D1000047 /* StreamSession+Watchdog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Session/StreamSession+Watchdog.swift"; sourceTree = SOURCE_ROOT; };
 		D1000049 /* StreamSession+Lifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Session/StreamSession+Lifecycle.swift"; sourceTree = SOURCE_ROOT; };
 		D100004B /* StreamSession+Callbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Session/StreamSession+Callbacks.swift"; sourceTree = SOURCE_ROOT; };
 		D100004D /* StreamBridgeContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Session/StreamBridgeContext.swift"; sourceTree = SOURCE_ROOT; };
 		D100004F /* RtspClient+Handshake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network/RtspClient+Handshake.swift"; sourceTree = "<group>"; };
+		DEC0DE2026111400A0000003 /* EnetControlChannel+RateChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network/EnetControlChannel+RateChange.swift"; sourceTree = "<group>"; };
 		D1000051 /* Pairing+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Network/Pairing+Crypto.swift"; sourceTree = SOURCE_ROOT; };
 		D1000053 /* Types+Cert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Network/Types+Cert.swift"; sourceTree = SOURCE_ROOT; };
 		D1000059 /* Identity+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Network/Identity+Loading.swift"; sourceTree = SOURCE_ROOT; };
@@ -1414,6 +1420,8 @@
 		D2000038 /* StreamProtocolConstantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamProtocolConstantsTests.swift; sourceTree = "<group>"; };
 		DEC0DE2026111400A0000007 /* RateChangeWireTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateChangeWireTests.swift; sourceTree = "<group>"; };
 		DEC0DE2026111400A0000009 /* RateChangeLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateChangeLaunchTests.swift; sourceTree = "<group>"; };
+		DEC0DE2026111400A000000B /* EnetRateChangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnetRateChangeTests.swift; sourceTree = "<group>"; };
+		DEC0DE2026111400A000000D /* RateChangeExchangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateChangeExchangeTests.swift; sourceTree = "<group>"; };
 		E9A93C80B589802B27974D75 /* LoginHelper.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = LoginHelper.entitlements; sourceTree = "<group>"; };
 		FA5CD63C82A1DCE2E8BA445D /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		FAA8BAED455B5E8FC738BF51 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2296,6 +2304,8 @@
 				D2000038 /* StreamProtocolConstantsTests.swift */,
 				DEC0DE2026111400A0000007 /* RateChangeWireTests.swift */,
 				DEC0DE2026111400A0000009 /* RateChangeLaunchTests.swift */,
+				DEC0DE2026111400A000000B /* EnetRateChangeTests.swift */,
+				DEC0DE2026111400A000000D /* RateChangeExchangeTests.swift */,
 				064F5F39A59E54E022FEE74E /* FuzzTests.swift */,
 				DEC0DE202610020000000014 /* FuzzTests+Stream.swift */,
 				DEC0DE202609220100000025 /* GlimmerCLITests.swift */,
@@ -2461,6 +2471,7 @@
 				D1000007 /* NativeBackend.swift */,
 				D1000041 /* NativeBackend+Pipeline.swift */,
 				D1000045 /* NativeBackend+Input.swift */,
+				DEC0DE2026111400A0000005 /* NativeBackend+RateChange.swift */,
 				D1000043 /* NativeBackend+Helpers.swift */,
 				D1000025 /* VideoRtpReceiver.swift */,
 				DEC0DE202609221900000007 /* VideoRtpReceiver+Recovery.swift */,
@@ -2473,6 +2484,7 @@
 				D81200000000000000000000 /* SocketTimestamp.swift */,
 				D1000013 /* RtspClient.swift */,
 				D100004F /* RtspClient+Handshake.swift */,
+				DEC0DE2026111400A0000003 /* EnetControlChannel+RateChange.swift */,
 				D1000023 /* RtpVideoQueue.swift */,
 				D10000E9 /* RtpVideoQueue+ReorderStats.swift */,
 				D1000D20 /* RtpVideoQueue+Reconstruct.swift */,
@@ -3279,6 +3291,8 @@
 				D2000039 /* StreamProtocolConstantsTests.swift in Sources */,
 				DEC0DE2026111400A0000008 /* RateChangeWireTests.swift in Sources */,
 				DEC0DE2026111400A000000A /* RateChangeLaunchTests.swift in Sources */,
+				DEC0DE2026111400A000000C /* EnetRateChangeTests.swift in Sources */,
+				DEC0DE2026111400A000000E /* RateChangeExchangeTests.swift in Sources */,
 				D5CD78BE12E450A9FDBE6424 /* FuzzTests.swift in Sources */,
 				DEC0DE202610020000000013 /* FuzzTests+Stream.swift in Sources */,
 				DEC0DE202609220100000026 /* GlimmerCLITests.swift in Sources */,
@@ -3441,6 +3455,7 @@
 				D1000008 /* NativeBackend.swift in Sources */,
 				D1000042 /* NativeBackend+Pipeline.swift in Sources */,
 				D1000046 /* NativeBackend+Input.swift in Sources */,
+				DEC0DE2026111400A0000006 /* NativeBackend+RateChange.swift in Sources */,
 				D1000044 /* NativeBackend+Helpers.swift in Sources */,
 				D1000026 /* VideoRtpReceiver.swift in Sources */,
 				DEC0DE202609221900000008 /* VideoRtpReceiver+Recovery.swift in Sources */,
@@ -3453,6 +3468,7 @@
 				D81200000000000000000001 /* SocketTimestamp.swift in Sources */,
 				D1000014 /* RtspClient.swift in Sources */,
 				D1000050 /* RtspClient+Handshake.swift in Sources */,
+				DEC0DE2026111400A0000004 /* EnetControlChannel+RateChange.swift in Sources */,
 				D1000024 /* RtpVideoQueue.swift in Sources */,
 				D10000EA /* RtpVideoQueue+ReorderStats.swift in Sources */,
 				D1000D21 /* RtpVideoQueue+Reconstruct.swift in Sources */,
