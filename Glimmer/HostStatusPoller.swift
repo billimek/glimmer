@@ -247,7 +247,8 @@ extension AppModel {
         if running == 0, !info.isBusy { continuationHistory.invalidate(pc: hostID) }
         var status = HostLiveStatus(
             hostID: hostID, state: Self.liveState(info, apps: host.apps), rttMs: rttMs,
-            sunshineVersion: info.appVersion, capturedAt: Date(), runningAppID: running == 0 ? nil : running
+            sunshineVersion: info.appVersion, capturedAt: Date(), runningAppID: running == 0 ? nil : running,
+            extensions: info.extensions
         )
         await publishLiveStatus(status, expectedHostID: hostID)
         guard !Task.isCancelled,

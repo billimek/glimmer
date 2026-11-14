@@ -19,6 +19,8 @@ extension AppModel {
         leaveGamesRunning = fresh.leaveGamesRunning
         defaultLaunchApp = fresh.defaultLaunchApp
         muteMacWhileStreaming = fresh.muteMacWhileStreaming
+        streamVirtualDisplay = fresh.streamVirtualDisplay
+        streamHostDisplay = fresh.streamHostDisplay
         captureSysKeys = fresh.captureSysKeys
         rawHIDControllerEnabled = fresh.rawHIDControllerEnabled
         streamCoversNotch = fresh.streamCoversNotch

@@ -126,6 +126,9 @@ struct GeneralPane: View {
                         Text(launchOptionLabel(name)).tag(name)
                     }
                 }
+                if let extensions = model.hostLiveStatus?.extensions {
+                    pcDisplayControls(extensions, model: $model)
+                }
             } header: {
                 Text("Streaming")
             } footer: {
@@ -140,6 +143,27 @@ struct GeneralPane: View {
         .onAppear { refreshLoginItemState() }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             refreshLoginItemState()
+        }
+    }
+
+    /// Shown only for a PC that reported it can build a display; the choice applies to the next stream.
+    @ViewBuilder
+    private func pcDisplayControls(_ extensions: HostExtensions, model: Bindable<AppModel>) -> some View {
+        if extensions.virtualDisplayAvailable {
+            Toggle(isOn: model.streamVirtualDisplay) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Virtual display")
+                    Text("The PC builds a display that matches the stream. Applies to the next stream.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .accessibilityLabel("Virtual display")
+        }
+        if extensions.offersHostDisplayModes {
+            Picker("Display arrangement", selection: model.streamHostDisplay) {
+                ForEach(HostDisplay.allCases, id: \.self) { Text($0.label).tag($0) }
+            }
         }
     }
 
@@ -490,5 +514,19 @@ struct StatsCustomRowsPicker: View {
                 }
             }
         )
+    }
+}
+
+extension HostDisplay {
+    var label: String {
+        switch self {
+        case .hostDefault: return "The PC's own setting"
+        case .exclusive: return "Virtual display only"
+        case .extendedPrimary: return "Extend, virtual display primary"
+        case .extended: return "Extend, PC display primary"
+        case .extendedIsolated: return "Extend and separate, PC display primary"
+        case .extendedPrimaryIsolated: return "Extend and separate, virtual display primary"
+        case .physical: return "Physical display"
+        }
     }
 }

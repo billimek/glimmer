@@ -227,7 +227,8 @@ package struct HostLiveStatus: Equatable {
         rttMs: Int? = nil,
         sunshineVersion: String? = nil,
         capturedAt: Date,
-        runningAppID: Int? = nil
+        runningAppID: Int? = nil,
+        extensions: HostExtensions = HostExtensions()
     ) {
         self.hostID = hostID
         self.state = state
@@ -235,6 +236,7 @@ package struct HostLiveStatus: Equatable {
         self.sunshineVersion = sunshineVersion
         self.capturedAt = capturedAt
         self.runningAppID = runningAppID
+        self.extensions = extensions
     }
 
     package enum State: Equatable {
@@ -274,6 +276,8 @@ package struct HostLiveStatus: Equatable {
     package var capturedAt: Date
     /// Names need not be unique, so automation keeps the PC's reported app ID.
     package var runningAppID: Int?
+    /// What the PC's /serverinfo said it can do beyond Sunshine; the settings offer only these.
+    package var extensions: HostExtensions
 
     package static let stale: TimeInterval = 60
 

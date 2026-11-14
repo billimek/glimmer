@@ -15,7 +15,7 @@ public enum SettingsReset {
         "cruiseTraversalEnabled", "cruiseVKnee", "cruiseVFull", "cruiseDragDeltaScale",
         "streamCoversNotch", "streamUsesFullScreenSpace", "launcherStyle", "launchAtLogin", "launchMinimized",
         "showStreamStats", "streamStatsCorner", "statsOverlayPreset", "statsOverlayCustomRows", "statsThresholds",
-        "showDiagnostics", "telemetryEnabled", "diagFileLogDebug"
+        "showDiagnostics", "telemetryEnabled", "diagFileLogDebug", "streamVirtualDisplay", "streamHostDisplay"
     ]
     public static let prefixes = ["glimmer.codecPreference.", "glimmer.launcherStyle.", "ios.touchLayout."]
 

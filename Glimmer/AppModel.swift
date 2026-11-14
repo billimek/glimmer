@@ -122,6 +122,15 @@ final class AppModel {
         didSet { settingsDefaults.set(muteMacWhileStreaming, forKey: "muteMacWhileStreaming") }
     }
 
+    /// Ask a PC that builds displays to order for one at the stream's size. Read at stream start.
+    var streamVirtualDisplay: Bool = false {
+        didSet { settingsDefaults.set(streamVirtualDisplay, forKey: "streamVirtualDisplay") }
+    }
+    /// What a Rubylight PC does with its displays during the stream; the PC's own setting by default.
+    var streamHostDisplay: HostDisplay = .hostDefault {
+        didSet { settingsDefaults.set(streamHostDisplay.rawValue, forKey: "streamHostDisplay") }
+    }
+
     /// Connection lifecycle published from the native engine. Drives the
     /// connect-banner, the StreamButton role, and the ReadinessChip's
     /// transitional state. See `StreamPhase` for the case set.
@@ -490,6 +499,8 @@ final class AppModel {
         _leaveGamesRunning = defaults.bool(forKey: "leaveGamesRunning")
         _muteMacWhileStreaming = settingsDefaults.bool(forKey: "muteMacWhileStreaming")
         _defaultLaunchApp = settingsDefaults.string(forKey: "defaultLaunchApp") ?? defaultLaunchApp
+        _streamVirtualDisplay = settingsDefaults.bool(forKey: "streamVirtualDisplay")
+        _streamHostDisplay = settingsDefaults.string(forKey: "streamHostDisplay").flatMap(HostDisplay.init) ?? .hostDefault
         _qualityPreset = Self.persistedQualityPreset(defaults: defaults) ?? _qualityPreset
         // Clamp legacy custom values to the bounds used by QualityPane.
         _customWidth = min(max(Self.persistedPositiveInt("customWidth", defaults: defaults) ?? _customWidth, 640), 7680)

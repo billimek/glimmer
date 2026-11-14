@@ -249,6 +249,9 @@ extension AppModel {
                                fps: effectiveFPS, bitrateKbps: effectiveBitrateKbps)
         cfg.captureSysKeys = captureSysKeys
         cfg.playAudioOnHost = muteMacWhileStreaming
+        cfg.request.virtualDisplay = streamVirtualDisplay
+        cfg.request.hostDisplay = streamHostDisplay
+        cfg.request.displayRefreshX100 = Self.mainDisplayRefreshX100()
         // Each display type retains its own choice of borderless cover or native Space.
         cfg.coversNotch = effectiveStreamCoversNotch
         cfg.displayMode = effectiveDisplayMode

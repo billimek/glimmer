@@ -93,6 +93,12 @@ extension AppModel {
         return (w, h, fps)
     }
 
+    /// The main display's current refresh rate times 100 (5994 for 59.94 Hz), or 0 when Core Graphics gives none.
+    static func mainDisplayRefreshX100() -> Int {
+        guard let id = NSScreen.main?.displayID, let hertz = CGDisplayCopyDisplayMode(id)?.refreshRate, hertz > 0 else { return 0 }
+        return Int((hertz * 100).rounded())
+    }
+
     static let frameRateExponent = StreamQuality.frameRateExponent
     nonisolated static let maxBitrateKbps = StreamQuality.maxBitrateKbps
     typealias MeasuredBitrateAnchor = StreamQuality.MeasuredBitrateAnchor
