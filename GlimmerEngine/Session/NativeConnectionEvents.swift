@@ -102,7 +102,11 @@ package final class NativeConnectionEvents: ConnectionEvents, @unchecked Sendabl
                 + "to promote streaming", Self.logCategory)
         }
         emit(.connectionEstablished)
-        if let backend, backend.withState({ backend.wakeNudge }) { Self.sendWakeNudge(to: backend) }
+        if let backend {
+            let nudge = backend.withState { backend.wakeNudge }
+            Diag.info("wake nudge \(nudge ? "on" : "off")", Self.logCategory)
+            if nudge { Self.sendWakeNudge(to: backend) }
+        }
         // Drive the actor side effect (flip InputForwarder ready,
         // close the ConnectFlow signpost). Best-effort; lossy if torn down.
         if let session = bridge?.session, let backend {
