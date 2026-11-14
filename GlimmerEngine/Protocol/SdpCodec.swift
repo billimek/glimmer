@@ -145,6 +145,27 @@ package enum SdpScan {
     package static func contains(_ sdp: String, _ needle: String) -> Bool {
         sdp.contains(needle)
     }
+
+    package static let maxControlMessages = 32
+
+    /// The 16-bit ids named by `a=x-rl-control:` lines, hex with 0x or decimal, in order and without
+    /// repeats. Malformed entries are skipped.
+    package static func controlMessages(_ sdp: String) -> [UInt16] {
+        let prefix = "a=x-rl-control:"
+        var ids: [UInt16] = []
+        for line in sdp.split(whereSeparator: \.isNewline) where line.hasPrefix(prefix) {
+            for item in line.dropFirst(prefix.count).split(separator: ",") {
+                let token = item.trimmingCharacters(in: [" ", "\t"]).lowercased()
+                let hex = token.hasPrefix("0x")
+                let digits = hex ? token.dropFirst(2) : token[...]
+                guard digits.allSatisfy({ hex ? $0.isHexDigit : $0.isASCII && $0.isNumber }),
+                      let id = UInt16(digits, radix: hex ? 16 : 10),
+                      !ids.contains(id), ids.count < maxControlMessages else { continue }
+                ids.append(id)
+            }
+        }
+        return ids
+    }
 }
 
 // MARK: - Audio layout (DESCRIBE surround-params)

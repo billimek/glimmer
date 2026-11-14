@@ -187,6 +187,7 @@
 		D1000008 /* NativeBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000007 /* NativeBackend.swift */; };
 		D1000010 /* StreamCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000F /* StreamCrypto.swift */; };
 		D1000012 /* SdpCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000011 /* SdpCodec.swift */; };
+		DEC0DE2026111400A0000002 /* RateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A0000001 /* RateChange.swift */; };
 		D1000014 /* RtspClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000013 /* RtspClient.swift */; };
 		D1000016 /* EnetControlChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000015 /* EnetControlChannel.swift */; };
 		D1000018 /* EnetWire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000017 /* EnetWire.swift */; };
@@ -520,6 +521,7 @@
 		D20000A1 /* ControllerQuitChordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20000A0 /* ControllerQuitChordTests.swift */; };
 		DEC0DE202609221600000002 /* ControllerInputRateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE202609221600000001 /* ControllerInputRateTests.swift */; };
 		D2000039 /* StreamProtocolConstantsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2000038 /* StreamProtocolConstantsTests.swift */; };
+		DEC0DE2026111400A0000008 /* RateChangeWireTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111400A0000007 /* RateChangeWireTests.swift */; };
 		D5CD78BE12E450A9FDBE6424 /* FuzzTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5F39A59E54E022FEE74E /* FuzzTests.swift */; };
 		DEC0DE202610020000000013 /* FuzzTests+Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE202610020000000014 /* FuzzTests+Stream.swift */; };
 		D96F6019901B5705F1040F52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505E37FB63C22AC476506587 /* Foundation.framework */; };
@@ -1057,6 +1059,7 @@
 		D1000007 /* NativeBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session/NativeBackend.swift; sourceTree = "<group>"; };
 		D100000F /* StreamCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Protocol/StreamCrypto+VideoDecryptor.swift"; sourceTree = SOURCE_ROOT; };
 		D1000011 /* SdpCodec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdpCodec.swift; sourceTree = "<group>"; };
+		DEC0DE2026111400A0000001 /* RateChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateChange.swift; sourceTree = "<group>"; };
 		D1000013 /* RtspClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network/RtspClient.swift; sourceTree = "<group>"; };
 		D1000015 /* EnetControlChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network/EnetControlChannel.swift; sourceTree = "<group>"; };
 		D1000017 /* EnetWire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnetWire.swift; sourceTree = "<group>"; };
@@ -1408,6 +1411,7 @@
 		D20000A0 /* ControllerQuitChordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerQuitChordTests.swift; sourceTree = "<group>"; };
 		DEC0DE202609221600000001 /* ControllerInputRateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerInputRateTests.swift; sourceTree = "<group>"; };
 		D2000038 /* StreamProtocolConstantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamProtocolConstantsTests.swift; sourceTree = "<group>"; };
+		DEC0DE2026111400A0000007 /* RateChangeWireTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateChangeWireTests.swift; sourceTree = "<group>"; };
 		E9A93C80B589802B27974D75 /* LoginHelper.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = LoginHelper.entitlements; sourceTree = "<group>"; };
 		FA5CD63C82A1DCE2E8BA445D /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		FAA8BAED455B5E8FC738BF51 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2288,6 +2292,7 @@
 				D20000A0 /* ControllerQuitChordTests.swift */,
 				DEC0DE202609221600000001 /* ControllerInputRateTests.swift */,
 				D2000038 /* StreamProtocolConstantsTests.swift */,
+				DEC0DE2026111400A0000007 /* RateChangeWireTests.swift */,
 				064F5F39A59E54E022FEE74E /* FuzzTests.swift */,
 				DEC0DE202610020000000014 /* FuzzTests+Stream.swift */,
 				DEC0DE202609220100000025 /* GlimmerCLITests.swift */,
@@ -2599,6 +2604,7 @@
 				E26101220000000000000001 /* AudioFecDecoder+Recovery.swift */,
 				D1000029 /* InputEncoder.swift */,
 				D1000011 /* SdpCodec.swift */,
+				DEC0DE2026111400A0000001 /* RateChange.swift */,
 				D1000003 /* StreamProtocolConstants.swift */,
 				E2610121000000000000000B /* StreamingBackend+Values.swift */,
 				E2610121000000000000000D /* StreamCrypto.swift */,
@@ -3268,6 +3274,7 @@
 				D20000A1 /* ControllerQuitChordTests.swift in Sources */,
 				DEC0DE202609221600000002 /* ControllerInputRateTests.swift in Sources */,
 				D2000039 /* StreamProtocolConstantsTests.swift in Sources */,
+				DEC0DE2026111400A0000008 /* RateChangeWireTests.swift in Sources */,
 				D5CD78BE12E450A9FDBE6424 /* FuzzTests.swift in Sources */,
 				DEC0DE202610020000000013 /* FuzzTests+Stream.swift in Sources */,
 				DEC0DE202609220100000026 /* GlimmerCLITests.swift in Sources */,
@@ -3570,6 +3577,7 @@
 				E26101220000000000000002 /* AudioFecDecoder+Recovery.swift in Sources */,
 				D1000030 /* InputEncoder.swift in Sources */,
 				D1000012 /* SdpCodec.swift in Sources */,
+				DEC0DE2026111400A0000002 /* RateChange.swift in Sources */,
 				D1000004 /* StreamProtocolConstants.swift in Sources */,
 				E2610121000000000000000C /* StreamingBackend+Values.swift in Sources */,
 				E2610121000000000000000E /* StreamCrypto.swift in Sources */,
