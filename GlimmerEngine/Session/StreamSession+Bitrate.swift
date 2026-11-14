@@ -109,6 +109,10 @@ extension StreamSession {
               wakeProbeTask == nil, pendingLaunch == nil, launchTask == nil,
               reconnectConfig != nil, reconnectAppID != nil else { return .deferred }
         lastBitrateChange = nil
+        if size == nil, backend.supportsRateChange, !rateChangeRefused {
+            bitrateTask = Task { await self.performRateChange(from: current, to: rate, reason: reason) }
+            return .accepted
+        }
         bitrateAudioTail = nil
         preserveGameOnStop = true
         isReconnecting = true
@@ -125,6 +129,44 @@ extension StreamSession {
     public func setBitrateChangesAvailable(_ available: Bool) async {
         bitrateAvailable = available
         if !available, bitrateChange != nil { await stop(cause: .systemSleep) }
+    }
+
+    /// Changes the encoder rate in place over the control stream. A refusal or silence keeps the current
+    /// rate and fails the change; the bandwidth policy decides what to ask next. The report has no leg for
+    /// the PC's reason, so the status goes to the log.
+    private func performRateChange(from current: Int, to rate: Int, reason: BitrateReason) async {
+        defer { bitrateTask = nil }
+        let attempt = attemptID
+        let start = uptimeSeconds
+        let result = await backend.changeBitrate(toKbps: rate)
+        var report = BitrateChangeReport(id: UUID(), fromKbps: current, requestedKbps: rate, reason: reason)
+        report.attempts = 1
+        report.elapsedMs = (uptimeSeconds - start) * 1_000
+        report.legs["rate_change_ms"] = report.elapsedMs
+        let live = isStreaming && !stopInProgress && !isReconnecting && attempt == attemptID
+        let applied = live ? Self.appliedRate(result) : nil
+        if let outcome = result?.bitrate, outcome.status == .refused, [.disabled, .codec].contains(outcome.reason) {
+            rateChangeRefused = true
+        }
+        let status = result.map { "\($0.bitrate.status)/\($0.bitrate.reason)" } ?? "none"
+        Diag.notice("rate_change requested=\(rate) result=\(status) applied=\(applied ?? 0)", "Stream")
+        report.outcome = !live ? .cancelled : (applied == nil ? .failed : .applied)
+        if let applied {
+            appliedBitrateKbps = applied
+            reconnectConfig?.bitrateKbps = applied
+            reconnectConfig?.bitrateBoost = 1
+        }
+        lastBitrateChange = report
+        recordBitrateReport(report)
+        finishBandwidthTransition(applied: applied != nil)
+    }
+
+    /// The rate the stream runs at after a result, or nil when the PC kept the old one or never answered.
+    static func appliedRate(_ result: RateChange.Result?) -> Int? {
+        guard let result, [.applied, .clamped].contains(result.bitrate.status), result.bitrateKbps > 0 else {
+            return nil
+        }
+        return Int(result.bitrateKbps)
     }
 
     private func performBitrateChange() async {

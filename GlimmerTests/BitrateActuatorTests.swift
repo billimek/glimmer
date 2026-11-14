@@ -351,6 +351,91 @@ struct BitrateActuatorTests {
         #expect(await fixture.session.appliedBitrateKbps == 40_000)
         #expect(await !fixture.session.isStreaming)
     }
+
+    @Test func negotiatedRateChangeAppliesInPlaceWithoutResuming() async throws {
+        let fixture = await BitrateFixture()
+        fixture.original.offerRateChange(answers: [Self.answer(.applied, kbps: 30_000)])
+        #expect(await fixture.session.request(rate: 30_000, reason: .congestion) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(fixture.pc.paths.isEmpty && fixture.fresh.startedConfigs.isEmpty)
+        #expect(fixture.original.rateChangeRequests == [30_000])
+        let report = try #require(await fixture.session.lastBitrateChange)
+        #expect(report.outcome == .applied && report.attempts == 1 && report.legs["rate_change_ms"] != nil)
+        #expect(await fixture.session.appliedBitrateKbps == 30_000)
+        #expect(await fixture.session.reconnectConfig?.bitrateKbps == 30_000)
+        #expect(await fixture.session.isStreaming)
+        #expect(fixture.banners.withLock { $0.isEmpty })
+        await fixture.stopLocally()
+    }
+
+    @Test func aClampedAnswerSetsTheRateTheStreamRunsAt() async {
+        let fixture = await BitrateFixture()
+        fixture.original.offerRateChange(answers: [Self.answer(.clamped, kbps: 25_000, reason: .hostLimit)])
+        #expect(await fixture.session.request(rate: 30_000, reason: .trial) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(await fixture.session.lastBitrateChange?.outcome == .applied)
+        #expect(await fixture.session.appliedBitrateKbps == 25_000)
+        #expect(await fixture.session.reconnectConfig?.bitrateKbps == 25_000)
+        await fixture.stopLocally()
+    }
+
+    @Test(arguments: [RateChange.Result?.none, BitrateActuatorTests.answer(.refused, kbps: 40_000, reason: .hostLimit)])
+    func aRefusedOrUnansweredChangeKeepsTheRateAndNeverResumes(answer: RateChange.Result?) async {
+        let fixture = await BitrateFixture()
+        fixture.original.offerRateChange(answers: [answer, Self.answer(.applied, kbps: 20_000)])
+        #expect(await fixture.session.request(rate: 30_000, reason: .congestion) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(await fixture.session.lastBitrateChange?.outcome == .failed)
+        #expect(await fixture.session.appliedBitrateKbps == 40_000)
+        #expect(await fixture.session.reconnectConfig?.bitrateKbps == 40_000)
+        #expect(fixture.pc.paths.isEmpty && fixture.fresh.startedConfigs.isEmpty)
+        #expect(await fixture.session.isStreaming)
+        #expect(await fixture.session.request(rate: 20_000, reason: .congestion) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(fixture.original.rateChangeRequests == [30_000, 20_000])
+        #expect(await fixture.session.appliedBitrateKbps == 20_000)
+        await fixture.stopLocally()
+    }
+
+    @Test(arguments: [RateChange.Reason.disabled, .codec])
+    func aPCThatCannotChangeThisStreamSendsLaterChangesThroughTheResume(reason: RateChange.Reason) async {
+        let fixture = await BitrateFixture()
+        fixture.original.offerRateChange(answers: [Self.answer(.refused, kbps: 40_000, reason: reason)])
+        #expect(await fixture.session.request(rate: 30_000, reason: .congestion) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(await fixture.session.lastBitrateChange?.outcome == .failed)
+        #expect(await fixture.session.request(rate: 30_000, reason: .congestion) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(fixture.original.rateChangeRequests == [30_000])
+        #expect(fixture.pc.paths == ["serverinfo", "resume"])
+        #expect(await fixture.session.lastBitrateChange?.outcome == .applied)
+        await fixture.stopLocally()
+    }
+
+    @Test func withoutNegotiationTheChangeResumesAsBefore() async {
+        let fixture = await BitrateFixture()
+        #expect(await fixture.session.request(rate: 30_000, reason: .congestion) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(fixture.original.rateChangeRequests.isEmpty)
+        #expect(fixture.pc.paths == ["serverinfo", "resume"])
+        await fixture.stopLocally()
+    }
+
+    @Test func aResizeStillResumesWhenRateChangeIsNegotiated() async {
+        let fixture = await BitrateFixture()
+        fixture.original.offerRateChange(answers: [Self.answer(.applied, kbps: 40_000)])
+        #expect(await fixture.session.request(width: 1366, height: 2064) == .accepted)
+        await fixture.session.waitForBitrateTask()
+        #expect(fixture.original.rateChangeRequests.isEmpty)
+        #expect(fixture.pc.paths == ["serverinfo", "resume"])
+        await fixture.stopLocally()
+    }
+
+    static func answer(_ status: RateChange.Status, kbps: UInt32,
+                               reason: RateChange.Reason = .none) -> RateChange.Result {
+        RateChange.Result(serial: 1, bitrateKbps: kbps, fpsMillihz: 0,
+                          bitrate: .init(status: status, reason: reason), fps: .init(status: .unchanged, reason: .none))
+    }
 }
 
 private actor BitrateTestGate {
@@ -377,6 +462,7 @@ private struct BitrateFixture: Sendable {
     static let sessionURL = "rtsp://192.0.2.10:48010"
     let session: StreamSession
     let pc: FakeSunshine
+    let original = InputRecordingBackend()
     let fresh: InputRecordingBackend
     let events: AsyncStream<StreamEvent>
     let quiesces: OSAllocatedUnfairLock<Int>
@@ -428,7 +514,7 @@ private struct BitrateFixture: Sendable {
         var services = SessionServices()
         services.bandwidthInputs = bandwidthInputs
         let session = StreamSession(hostDisposition: disposition, audioDecoder: audio, services: services,
-            backend: InputRecordingBackend(), makeNetwork: { pc.client($0) }, makeBackend: { fresh }, clock: clock,
+            backend: original, makeNetwork: { pc.client($0) }, makeBackend: { fresh }, clock: clock,
             adaptiveBandwidth: adaptiveBandwidth)
         self.session = session
         let banners = banners

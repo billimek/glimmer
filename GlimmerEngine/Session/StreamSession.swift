@@ -203,6 +203,9 @@ public actor StreamSession {
     package var bitrateChange: BitrateChange?
     package var bitrateTask: Task<Void, Never>?
     package var bitrateAvailable = true
+    /// The PC refused rate changes for this stream (disabled, or a codec that cannot take them), so
+    /// later changes use the resume path.
+    package var rateChangeRefused = false
     package var qualityNotice = QualityNoticeGate()
     package var preserveGameOnStop = false
     package var bitrateAudioTail: (id: UUID, attempt: UUID, oldLast: Double)?

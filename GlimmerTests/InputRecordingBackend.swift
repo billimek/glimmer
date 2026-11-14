@@ -105,6 +105,16 @@ final class InputRecordingBackend: StreamingBackend {
         self.onConnect = onConnect
         self.beforeConnect = beforeConnect
     }
+    /// Answers to mid-stream rate changes, taken in order; nil means the PC does not offer them.
+    private let rateChangeAnswers = OSAllocatedUnfairLock<[RateChange.Result?]?>(initialState: nil)
+    private let rateChangeAsks = OSAllocatedUnfairLock(initialState: [Int]())
+    var supportsRateChange: Bool { rateChangeAnswers.withLock { $0 != nil } }
+    var rateChangeRequests: [Int] { rateChangeAsks.withLock { $0 } }
+    func offerRateChange(answers: [RateChange.Result?]) { rateChangeAnswers.withLock { $0 = answers } }
+    func changeBitrate(toKbps kbps: Int) async -> RateChange.Result? {
+        rateChangeAsks.withLock { $0.append(kbps) }
+        return rateChangeAnswers.withLock { $0?.isEmpty == false ? $0?.removeFirst() ?? nil : nil }
+    }
     private let idrCount = OSAllocatedUnfairLock(initialState: 0)
     private let hostHDR = OSAllocatedUnfairLock<HdrMetadata?>(initialState: nil)
     private let pointerSends = OSAllocatedUnfairLock(initialState: [PointerSend]())
