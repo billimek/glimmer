@@ -46,6 +46,11 @@ package struct StreamRequest: Sendable {
     /// Moonlight's "play audio on host PC": the PC keeps its own sound and
     /// this Mac silences the stream (not the system volume).
     package var playAudioOnHost: Bool = false
+    /// Ask a PC that builds displays to order for one at the stream's size.
+    package var virtualDisplay = false
+    package var hostDisplay: HostDisplay = .hostDefault
+    /// The display's refresh rate times 100 (5994 for 59.94 Hz); 0 when unknown.
+    package var displayRefreshX100 = 0
 
     package init(width: Int, height: Int, fps: Int, bitrateKbps: Int, videoFormats: VideoFormats) {
         self.width = width

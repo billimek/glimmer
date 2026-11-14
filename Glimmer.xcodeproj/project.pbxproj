@@ -468,6 +468,7 @@
 		DEC0DE20261010A1000020B0 /* RtpReceiverLoopbackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE20261010A1000020F0 /* RtpReceiverLoopbackTests.swift */; };
 		DEC0DE2026101010A0000001 /* RtspHandshakeParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026101010A0000002 /* RtspHandshakeParsingTests.swift */; };
 		DEC0DE2026101010A0000003 /* SunshineHTTPParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026101010A0000004 /* SunshineHTTPParsingTests.swift */; };
+		A11CE0DE20261114001002 /* HostExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0DE20261114001001 /* HostExtensionsTests.swift */; };
 		DEC0DE2026101010A0000005 /* PairingHandshakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026101010A0000006 /* PairingHandshakeTests.swift */; };
 		DEC0DE202609222200000006 /* HostContextMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE202609222200000005 /* HostContextMenuTests.swift */; };
 		DEC0DE202609222200000004 /* StreamButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE202609222200000003 /* StreamButtonTests.swift */; };
@@ -592,6 +593,7 @@
 		C829A79CF8DB4C8DAE9DE808 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9193625BAB140A59EF6F71E /* Types.swift */; };
 		2D151B2BF8E94635B1C40BC5 /* StreamFailureCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC85BFE583544FCA2F28B0F /* StreamFailureCopy.swift */; };
 		E962AC3C6F07407385B8B72A /* HostValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F8EC1A77C74BD2B9C27E1A /* HostValues.swift */; };
+		A11CE0DE2026111400000002 /* HostExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0DE2026111400000001 /* HostExtensions.swift */; };
 		EC411DAB124D47AAABA8EB12 /* RttStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A06F8F6572401994F25BFB /* RttStats.swift */; };
 		FD7E927EF1674C9185E7BE26 /* LinkGateDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1616CAD9D742D2AE4A13B1 /* LinkGateDecision.swift */; };
 		4B4DB077B2A34F90ADABA597 /* ProcessMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48985D11B784CB1BC748E97 /* ProcessMetrics.swift */; };
@@ -1356,6 +1358,7 @@
 		DEC0DE20261010A1000020F0 /* RtpReceiverLoopbackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RtpReceiverLoopbackTests.swift; sourceTree = "<group>"; };
 		DEC0DE2026101010A0000002 /* RtspHandshakeParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RtspHandshakeParsingTests.swift"; sourceTree = "<group>"; };
 		DEC0DE2026101010A0000004 /* SunshineHTTPParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SunshineHTTPParsingTests.swift"; sourceTree = "<group>"; };
+		A11CE0DE20261114001001 /* HostExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HostExtensionsTests.swift"; sourceTree = "<group>"; };
 		DEC0DE2026101010A0000006 /* PairingHandshakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PairingHandshakeTests.swift"; sourceTree = "<group>"; };
 		DEC0DE202609222200000005 /* HostContextMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HostContextMenuTests.swift"; sourceTree = "<group>"; };
 		DEC0DE202609222200000003 /* StreamButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreamButtonTests.swift"; sourceTree = "<group>"; };
@@ -1459,6 +1462,7 @@
 		F9193625BAB140A59EF6F71E /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Models/Types.swift"; sourceTree = SOURCE_ROOT; };
 		9AC85BFE583544FCA2F28B0F /* StreamFailureCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Models/StreamFailureCopy.swift"; sourceTree = SOURCE_ROOT; };
 		B2F8EC1A77C74BD2B9C27E1A /* HostValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Models/HostValues.swift"; sourceTree = SOURCE_ROOT; };
+		A11CE0DE2026111400000001 /* HostExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Models/HostExtensions.swift"; sourceTree = SOURCE_ROOT; };
 		47A06F8F6572401994F25BFB /* RttStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Models/RttStats.swift"; sourceTree = SOURCE_ROOT; };
 		5C1616CAD9D742D2AE4A13B1 /* LinkGateDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlimmerEngine/Models/LinkGateDecision.swift"; sourceTree = SOURCE_ROOT; };
 		D48985D11B784CB1BC748E97 /* ProcessMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Glimmer/EngineAdapters/ProcessMetrics.swift"; sourceTree = SOURCE_ROOT; };
@@ -2220,6 +2224,7 @@
 				DEC0DE20261010A1000020F0 /* RtpReceiverLoopbackTests.swift */,
 				DEC0DE2026101010A0000002 /* RtspHandshakeParsingTests.swift */,
 				DEC0DE2026101010A0000004 /* SunshineHTTPParsingTests.swift */,
+				A11CE0DE20261114001001 /* HostExtensionsTests.swift */,
 				DEC0DE2026101010A0000006 /* PairingHandshakeTests.swift */,
 				DEC0DE202609220300000010 /* AppShellTests.swift */,
 				A1501A7E0000000000000002 /* IsolatedDefaults.swift */,
@@ -2521,6 +2526,7 @@
 				5C1616CAD9D742D2AE4A13B1 /* LinkGateDecision.swift */,
 				47A06F8F6572401994F25BFB /* RttStats.swift */,
 				B2F8EC1A77C74BD2B9C27E1A /* HostValues.swift */,
+				A11CE0DE2026111400000001 /* HostExtensions.swift */,
 				9AC85BFE583544FCA2F28B0F /* StreamFailureCopy.swift */,
 				F9193625BAB140A59EF6F71E /* Types.swift */,
 				EA5AEC9809F44829BB42E6DC /* SystemStatsSnapshot.swift */,
@@ -3200,6 +3206,7 @@
 				DEC0DE20261010A1000020B0 /* RtpReceiverLoopbackTests.swift in Sources */,
 				DEC0DE2026101010A0000001 /* RtspHandshakeParsingTests.swift in Sources */,
 				DEC0DE2026101010A0000003 /* SunshineHTTPParsingTests.swift in Sources */,
+				A11CE0DE20261114001002 /* HostExtensionsTests.swift in Sources */,
 				DEC0DE2026101010A0000005 /* PairingHandshakeTests.swift in Sources */,
 				DEC0DE20260922030000000F /* AppShellTests.swift in Sources */,
 				A1501A7E0000000000000001 /* IsolatedDefaults.swift in Sources */,
@@ -3500,6 +3507,7 @@
 				FD7E927EF1674C9185E7BE26 /* LinkGateDecision.swift in Sources */,
 				EC411DAB124D47AAABA8EB12 /* RttStats.swift in Sources */,
 				E962AC3C6F07407385B8B72A /* HostValues.swift in Sources */,
+				A11CE0DE2026111400000002 /* HostExtensions.swift in Sources */,
 				2D151B2BF8E94635B1C40BC5 /* StreamFailureCopy.swift in Sources */,
 				C829A79CF8DB4C8DAE9DE808 /* Types.swift in Sources */,
 				0FD00A2A946D46D4BBC54E32 /* SystemStatsSnapshot.swift in Sources */,
