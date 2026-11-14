@@ -186,6 +186,9 @@ public struct ServerInfo: Sendable {
     /// Only learnable while the host is ONLINE; some Sunshine NIC configs report a zeroed
     /// MAC, which `WakeOnLAN.normalizeMac` treats as absent (Wake on LAN fails closed on it).
     public var macAddress: String?
+    /// A Rubylight PC that changes bitrate mid-stream: RustHostVersion and both encoder-bitrate fields,
+    /// read over the paired connection.
+    package var supportsRateChange = false
 
     public init(address: String, uniqueId: String, serverName: String) {
         self.address = address

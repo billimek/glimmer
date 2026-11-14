@@ -150,6 +150,11 @@ extension NetworkClient {
         // over plain HTTP anyone on the LAN can write it (Sunshine always sends
         // 0 there), and some Sunshine builds omit it or send 0 over HTTPS.
         server.pairStatus = fetchedOverPaired ? .paired : .unpaired
+        if fetchedOverPaired {
+            server.supportsRateChange = xml.string(forChild: "RustHostVersion").map { !$0.isEmpty } == true
+                && xml.string(forChild: "RustHostEncoderBitrateKbps") != nil
+                && xml.string(forChild: "RustHostInitialEncoderBitrateKbps") != nil
+        }
         if let maxLuma = xml.int(forChild: "MaxLumaPixelsHEVC") {
             server.maxLumaPixelsHEVC = maxLuma
         }
@@ -239,7 +244,8 @@ extension NetworkClient {
               + "&clientHdrCapDisplayData=0x0x0x0x0x0x0x0x0x0x0"
             : ""
 
-        let query = Self.launchQuery(config: config, riKeyHex: riKeyHex, riKeyID: riKeyID, appID: appID)
+        let query = Self.launchQuery(config: config, riKeyHex: riKeyHex, riKeyID: riKeyID, appID: appID,
+                                     requestRateChange: server.supportsRateChange)
         // Append HDR params as an ordered tail blob so we keep the exact key
         // order the host expects. Building it through the dictionary would lose
         // that ordering.
@@ -306,7 +312,8 @@ extension NetworkClient {
     /// The keyed part of the /launch and /resume query (HDR rides separately,
     /// as an ordered tail). Static so the wire values are checkable offline.
     package static func launchQuery(config: StreamRequest, riKeyHex: String,
-                                    riKeyID: Int32, appID: Int?) -> [String: String] {
+                                    riKeyID: Int32, appID: Int?,
+                                    requestRateChange: Bool = false) -> [String: String] {
         var query: [String: String] = [
             "mode": "\(config.width)x\(config.height)x\(config.fps)",
             "additionalStates": "1",
@@ -324,6 +331,7 @@ extension NetworkClient {
             "corever": "1"
         ]
         if let appID { query["appid"] = "\(appID)" }
+        if requestRateChange { query[RateChange.launchParameter] = "1" }
         return query
     }
 
