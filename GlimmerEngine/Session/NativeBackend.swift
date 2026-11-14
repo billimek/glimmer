@@ -33,6 +33,9 @@ package final class NativeBackend: StreamingBackend, @unchecked Sendable {
     /// @MainActor input forwarders, set under stateLock.
     var inputReady = false
 
+    /// Set from the PC's `BackendServerInfo` at connect; read once the connection is established.
+    var wakeNudge = false
+
     /// Input queue+merge+1ms-flush (InputStream.c's inputSendThreadProc). Owns
     /// the high-rate mouse/controller coalescing so the reliable input RATE drops
     /// from ~150-250/s to ~1 packet per change per ~1ms tick - the fix for the

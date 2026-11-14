@@ -23,6 +23,8 @@ extension NativeBackend {
             Diag.info("native backend: encrypted RTSP (rtspenc://) - sealing messages", Self.logCategory)
         }
 
+        withState { wakeNudge = server.wakeNudge }
+
         // Resolve the host address ONCE, here, before any stage (issue #70).
         // A hostname/FQDN used to ride through RTSP and ENet control (whose C
         // connect paths run their own getaddrinfo) and then kill BOTH RTP

@@ -84,7 +84,8 @@ public actor StreamConnection {
             let config = try configuration.backendConfig(launch: launch)
             let info = BackendServerInfo(address: server.address, appVersion: server.appVersion ?? "unknown",
                 rtspSessionUrl: launch.sessionURL,
-                serverCodecModeRaw: NetworkClient.backendCodecModeMask(server.serverCodecModeRaw))
+                serverCodecModeRaw: NetworkClient.backendCodecModeMask(server.serverCodecModeRaw),
+                wakeNudge: server.wakeNudge)
             try await backend.startConnectionAsync(server: info, config: config)
         } catch {
             input.stop()

@@ -117,7 +117,8 @@ extension StreamSession {
             rtspSessionUrl: launch.sessionURL,
             // RAW SCM_* bitmask from /serverinfo - see the landmine note in
             // StreamProtocol.SCM_*.
-            serverCodecModeRaw: NetworkClient.backendCodecModeMask(serverInfo.serverCodecModeRaw))
+            serverCodecModeRaw: NetworkClient.backendCodecModeMask(serverInfo.serverCodecModeRaw),
+            wakeNudge: serverInfo.wakeNudge)
 
         // Open the `ConnectFlow` interval right before startConnection so the
         // timeline captures the full handshake (RTSP negotiation + control

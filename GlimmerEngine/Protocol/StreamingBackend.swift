@@ -46,12 +46,14 @@ package struct BackendServerInfo: Sendable {
         address: String,
         appVersion: String,
         rtspSessionUrl: String,
-        serverCodecModeRaw: Int32
+        serverCodecModeRaw: Int32,
+        wakeNudge: Bool = false
     ) {
         self.address = address
         self.appVersion = appVersion
         self.rtspSessionUrl = rtspSessionUrl
         self.serverCodecModeRaw = serverCodecModeRaw
+        self.wakeNudge = wakeNudge
     }
 
     package var address: String
@@ -60,6 +62,8 @@ package struct BackendServerInfo: Sendable {
     /// The RAW SCM_* bitmask straight from /serverinfo. NOT the VIDEO_FORMAT_*
     /// layout - see StreamProtocol.SCM_* landmine note.
     package var serverCodecModeRaw: Int32
+    /// Send a 1 px mouse move out and back once connected, to wake a Rubylight PC's new display.
+    package var wakeNudge: Bool
 }
 
 /// One PLENTRY-equivalent buffer in a DecodeUnit's chain.

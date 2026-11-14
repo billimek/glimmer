@@ -468,6 +468,7 @@
 		DEC0DE20261010A1000020B0 /* RtpReceiverLoopbackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE20261010A1000020F0 /* RtpReceiverLoopbackTests.swift */; };
 		DEC0DE2026101010A0000001 /* RtspHandshakeParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026101010A0000002 /* RtspHandshakeParsingTests.swift */; };
 		DEC0DE2026101010A0000003 /* SunshineHTTPParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026101010A0000004 /* SunshineHTTPParsingTests.swift */; };
+		DEC0DE2026111401A0000001 /* WakeNudgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026111401A0000002 /* WakeNudgeTests.swift */; };
 		DEC0DE2026101010A0000005 /* PairingHandshakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE2026101010A0000006 /* PairingHandshakeTests.swift */; };
 		DEC0DE202609222200000006 /* HostContextMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE202609222200000005 /* HostContextMenuTests.swift */; };
 		DEC0DE202609222200000004 /* StreamButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0DE202609222200000003 /* StreamButtonTests.swift */; };
@@ -1356,6 +1357,7 @@
 		DEC0DE20261010A1000020F0 /* RtpReceiverLoopbackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RtpReceiverLoopbackTests.swift; sourceTree = "<group>"; };
 		DEC0DE2026101010A0000002 /* RtspHandshakeParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RtspHandshakeParsingTests.swift"; sourceTree = "<group>"; };
 		DEC0DE2026101010A0000004 /* SunshineHTTPParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SunshineHTTPParsingTests.swift"; sourceTree = "<group>"; };
+		DEC0DE2026111401A0000002 /* WakeNudgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WakeNudgeTests.swift"; sourceTree = "<group>"; };
 		DEC0DE2026101010A0000006 /* PairingHandshakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PairingHandshakeTests.swift"; sourceTree = "<group>"; };
 		DEC0DE202609222200000005 /* HostContextMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HostContextMenuTests.swift"; sourceTree = "<group>"; };
 		DEC0DE202609222200000003 /* StreamButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreamButtonTests.swift"; sourceTree = "<group>"; };
@@ -2220,6 +2222,7 @@
 				DEC0DE20261010A1000020F0 /* RtpReceiverLoopbackTests.swift */,
 				DEC0DE2026101010A0000002 /* RtspHandshakeParsingTests.swift */,
 				DEC0DE2026101010A0000004 /* SunshineHTTPParsingTests.swift */,
+				DEC0DE2026111401A0000002 /* WakeNudgeTests.swift */,
 				DEC0DE2026101010A0000006 /* PairingHandshakeTests.swift */,
 				DEC0DE202609220300000010 /* AppShellTests.swift */,
 				A1501A7E0000000000000002 /* IsolatedDefaults.swift */,
@@ -3200,6 +3203,7 @@
 				DEC0DE20261010A1000020B0 /* RtpReceiverLoopbackTests.swift in Sources */,
 				DEC0DE2026101010A0000001 /* RtspHandshakeParsingTests.swift in Sources */,
 				DEC0DE2026101010A0000003 /* SunshineHTTPParsingTests.swift in Sources */,
+				DEC0DE2026111401A0000001 /* WakeNudgeTests.swift in Sources */,
 				DEC0DE2026101010A0000005 /* PairingHandshakeTests.swift in Sources */,
 				DEC0DE20260922030000000F /* AppShellTests.swift in Sources */,
 				A1501A7E0000000000000001 /* IsolatedDefaults.swift in Sources */,

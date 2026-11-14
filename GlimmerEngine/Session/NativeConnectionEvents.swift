@@ -102,11 +102,24 @@ package final class NativeConnectionEvents: ConnectionEvents, @unchecked Sendabl
                 + "to promote streaming", Self.logCategory)
         }
         emit(.connectionEstablished)
+        if let backend, backend.withState({ backend.wakeNudge }) { Self.sendWakeNudge(to: backend) }
         // Drive the actor side effect (flip InputForwarder ready,
         // close the ConnectFlow signpost). Best-effort; lossy if torn down.
         if let session = bridge?.session, let backend {
             enqueueSessionEvent { await session.nativeConnectionEstablished(from: backend) }
         }
+    }
+
+    private static func sendWakeNudge(to backend: NativeBackend) {
+        Task.detached { await wakeNudge(send: { backend.sendMouseMove(dx: $0, dy: $1) }) }
+    }
+
+    /// A 1 px move out and back, 10 ms apart, as Nightjar sends to wake a Rubylight PC's new display.
+    static func wakeNudge(send: @Sendable (Int16, Int16) -> Int32,
+                          pause: @Sendable () async -> Void = { try? await Task.sleep(for: .milliseconds(10)) }) async {
+        _ = send(1, 1)
+        await pause()
+        _ = send(-1, -1)
     }
 
     package func connectionTerminated(code: Int32) {
