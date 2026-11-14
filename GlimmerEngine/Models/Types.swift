@@ -180,6 +180,10 @@ public struct ServerInfo: Sendable {
     /// code thinks in, while `serverCodecModeRaw` is what the backend
     /// needs on the wire.
     package var serverCodecModeRaw: Int = 0
+    /// `RustHostVersion`: sent only by Rubylight.
+    package var rustHostVersion: String?
+    /// Rubylight leaves a new virtual display inactive until input arrives.
+    package var wakeNudge: Bool { rustHostVersion != nil }
     public var isBusy = false
     public var currentGameID: Int = 0           // 0 = host is idle; otherwise the app ID that's streaming
     /// Host's primary-NIC MAC from /serverinfo's `<mac>`, as stock Moonlight uses for WoL.

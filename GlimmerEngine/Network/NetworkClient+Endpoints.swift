@@ -150,6 +150,9 @@ extension NetworkClient {
         // over plain HTTP anyone on the LAN can write it (Sunshine always sends
         // 0 there), and some Sunshine builds omit it or send 0 over HTTPS.
         server.pairStatus = fetchedOverPaired ? .paired : .unpaired
+        if let version = xml.string(forChild: "RustHostVersion") {
+            server.rustHostVersion = version.isEmpty ? nil : version
+        }
         if let maxLuma = xml.int(forChild: "MaxLumaPixelsHEVC") {
             server.maxLumaPixelsHEVC = maxLuma
         }
