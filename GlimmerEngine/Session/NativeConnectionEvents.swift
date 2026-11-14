@@ -103,8 +103,9 @@ package final class NativeConnectionEvents: ConnectionEvents, @unchecked Sendabl
         }
         emit(.connectionEstablished)
         if let backend {
-            let nudge = backend.withState { backend.wakeNudge }
-            Diag.info("wake nudge \(nudge ? "on" : "off")", Self.logCategory)
+            // Runs inside adoptWhileConnecting, which already holds stateLock; taking it again deadlocks.
+            let nudge = backend.wakeNudge
+            Diag.notice("wake nudge \(nudge ? "on" : "off")", Self.logCategory)
             if nudge { Self.sendWakeNudge(to: backend) }
         }
         // Drive the actor side effect (flip InputForwarder ready,
