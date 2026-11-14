@@ -240,7 +240,8 @@ extension NetworkClient {
               + "&clientHdrCapDisplayData=0x0x0x0x0x0x0x0x0x0x0"
             : ""
 
-        let query = Self.launchQuery(config: config, riKeyHex: riKeyHex, riKeyID: riKeyID, appID: appID)
+        let query = Self.launchQuery(config: config, riKeyHex: riKeyHex, riKeyID: riKeyID, appID: appID,
+                                     extensions: server.extensions)
         // Append HDR params as an ordered tail blob so we keep the exact key
         // order the host expects. Building it through the dictionary would lose
         // that ordering.
@@ -306,10 +307,10 @@ extension NetworkClient {
 
     /// The keyed part of the /launch and /resume query (HDR rides separately,
     /// as an ordered tail). Static so the wire values are checkable offline.
-    package static func launchQuery(config: StreamRequest, riKeyHex: String,
-                                    riKeyID: Int32, appID: Int?) -> [String: String] {
+    package static func launchQuery(config: StreamRequest, riKeyHex: String, riKeyID: Int32, appID: Int?,
+                                    extensions: HostExtensions = HostExtensions()) -> [String: String] {
         var query: [String: String] = [
-            "mode": "\(config.width)x\(config.height)x\(config.fps)",
+            "mode": "\(config.width)x\(config.height)x\(launchRate(config, extensions))",
             "additionalStates": "1",
             "sops": config.changeResolution ? "1" : "0",
             "rikey": riKeyHex,
@@ -325,6 +326,26 @@ extension NetworkClient {
             "corever": "1"
         ]
         if let appID { query["appid"] = "\(appID)" }
+        return query.merging(displayQuery(config, extensions)) { current, _ in current }
+    }
+
+    /// "59.94" when the PC reads fractions and the display's rate is fractional and rounds to the stream's.
+    static func launchRate(_ config: StreamRequest, _ extensions: HostExtensions) -> String {
+        let x100 = config.displayRefreshX100
+        guard extensions.readsFractionalRefresh, (100...100_000).contains(x100), x100 % 100 != 0,
+              (x100 + 50) / 100 == config.fps else { return "\(config.fps)" }
+        return "\(x100 / 100)." + String(format: "%02d", x100 % 100)
+    }
+
+    /// The virtual display and host display keys, only for a PC that reported the capability.
+    static func displayQuery(_ config: StreamRequest, _ extensions: HostExtensions) -> [String: String] {
+        let display = extensions.offersHostDisplayModes ? config.hostDisplay : .hostDefault
+        var query: [String: String] = [:]
+        if extensions.virtualDisplayAvailable, display.requestsVirtualDisplay(setting: config.virtualDisplay) {
+            query["virtualDisplay"] = "1"
+            query["scaleFactor"] = "100"
+        }
+        if let value = display.wireValue { query["hostDisplay"] = value }
         return query
     }
 

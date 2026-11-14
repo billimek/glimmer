@@ -31,7 +31,8 @@ extension NetworkClient {
         try await resume(config: config.request)
     }
 
-    static func launchQuery(config: StreamConfig, riKeyHex: String, riKeyID: Int32, appID: Int?) -> [String: String] {
-        launchQuery(config: config.request, riKeyHex: riKeyHex, riKeyID: riKeyID, appID: appID)
+    static func launchQuery(config: StreamConfig, riKeyHex: String, riKeyID: Int32, appID: Int?,
+                            extensions: HostExtensions = HostExtensions()) -> [String: String] {
+        launchQuery(config: config.request, riKeyHex: riKeyHex, riKeyID: riKeyID, appID: appID, extensions: extensions)
     }
 }

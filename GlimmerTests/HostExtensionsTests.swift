@@ -7,7 +7,7 @@ import Testing
 
 struct HostExtensionsTests {
 
-    private static func extensions(_ fields: String, from start: HostExtensions = HostExtensions()) throws -> HostExtensions {
+    static func extensions(_ fields: String, from start: HostExtensions = HostExtensions()) throws -> HostExtensions {
         let node = try XMLTreeBuilder.parse(data: Data("<root status_code=\"200\">\(fields)</root>".utf8))
         var result = start
         result.merge(from: node)
