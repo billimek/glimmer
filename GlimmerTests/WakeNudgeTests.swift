@@ -56,6 +56,30 @@ struct WakeNudgeTests {
         await NativeConnectionEvents.wakeNudge(send: { log.add($0, $1); return 0 }, pause: { log.pause() })
         #expect(log.events == ["1,1", "pause", "-1,-1"])
     }
+
+    @Test func connectingWithTheNudgeOnDoesNotDeadlock() async {
+        let session = StreamSession(hostDisposition: .cancelOwnedHostSession)
+        let bridge = StreamBridgeContext(session: session, videoDecoder: await VideoDecoder(),
+                                         audioDecoder: AudioDecoder(defaults: UserDefaults(suiteName: "WakeNudgeTests") ?? .standard))
+        let backend = NativeBackend()
+        backend.withState { backend.wakeNudge = true }
+        bridge.setEventSource(backend, attempt: bridge.currentAttempt)
+        let events = NativeConnectionEvents(bridge: bridge, backend: backend)
+        let done = AsyncStream<Void>.makeStream()
+        DispatchQueue.global().async {
+            _ = backend.adoptWhileConnecting { events.connectionStarted() }
+            done.continuation.yield()
+        }
+        let finished = await withTaskGroup(of: Bool.self) { group in
+            group.addTask { for await _ in done.stream { return true }; return false }
+            group.addTask { try? await Task.sleep(for: .seconds(5)); return false }
+            let first = await group.next() ?? false
+            group.cancelAll()
+            return first
+        }
+        #expect(finished)
+        await events.drainSessionEvents()
+    }
 }
 
 private final class MoveLog: @unchecked Sendable {
