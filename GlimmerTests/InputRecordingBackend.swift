@@ -113,7 +113,7 @@ final class InputRecordingBackend: StreamingBackend {
     func offerRateChange(answers: [RateChange.Result?]) { rateChangeAnswers.withLock { $0 = answers } }
     func changeBitrate(toKbps kbps: Int) async -> RateChange.Result? {
         rateChangeAsks.withLock { $0.append(kbps) }
-        return rateChangeAnswers.withLock { $0?.isEmpty == false ? $0?.removeFirst() ?? nil : nil }
+        return rateChangeAnswers.withLock { $0?.isEmpty == false ? $0?.removeFirst() : nil }
     }
     private let idrCount = OSAllocatedUnfairLock(initialState: 0)
     private let hostHDR = OSAllocatedUnfairLock<HdrMetadata?>(initialState: nil)

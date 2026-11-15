@@ -432,7 +432,7 @@ struct BitrateActuatorTests {
     }
 
     static func answer(_ status: RateChange.Status, kbps: UInt32,
-                               reason: RateChange.Reason = .none) -> RateChange.Result {
+                       reason: RateChange.Reason = .none) -> RateChange.Result {
         RateChange.Result(serial: 1, bitrateKbps: kbps, fpsMillihz: 0,
                           bitrate: .init(status: status, reason: reason), fps: .init(status: .unchanged, reason: .none))
     }
