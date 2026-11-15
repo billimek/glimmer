@@ -126,13 +126,13 @@ struct GeneralPane: View {
                         Text(launchOptionLabel(name)).tag(name)
                     }
                 }
-                if let extensions = model.hostLiveStatus?.extensions {
-                    pcDisplayControls(extensions, model: $model)
-                }
             } header: {
                 Text("Streaming")
             } footer: {
                 Text("To stream a different app once, click it in the launcher.")
+            }
+            if let extensions = model.hostLiveStatus?.extensions, extensions.virtualDisplayAvailable {
+                Section("PC display") { pcDisplayControls(extensions, model: $model) }
             }
             SettingsResetSection(enabled: !model.isStreaming) { includeGames in
                 try await model.resetSettings(includeGames: includeGames)
@@ -146,20 +146,18 @@ struct GeneralPane: View {
         }
     }
 
-    /// Shown only for a PC that reported it can build a display; the choice applies to the next stream.
+    /// Shown only for a PC that can build a display; the choice applies to the next stream.
     @ViewBuilder
     private func pcDisplayControls(_ extensions: HostExtensions, model: Bindable<AppModel>) -> some View {
-        if extensions.virtualDisplayAvailable {
-            Toggle(isOn: model.streamVirtualDisplay) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Virtual display")
-                    Text("The PC builds a display that matches the stream. Applies to the next stream.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
+        Toggle(isOn: model.streamVirtualDisplay) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Virtual display")
+                Text("The PC builds a display that matches the stream. Applies to the next stream.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
-            .accessibilityLabel("Virtual display")
         }
+        .accessibilityLabel("Virtual display")
         if extensions.offersHostDisplayModes {
             Picker("Display arrangement", selection: model.streamHostDisplay) {
                 ForEach(HostDisplay.allCases, id: \.self) { Text($0.label).tag($0) }
